@@ -26,7 +26,7 @@ app_license = "mit"
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/listbrew/css/listbrew.css"
-# app_include_js = "/assets/listbrew/js/listbrew.js"
+app_include_js = "/assets/listbrew/js/listbrew_ui.js"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/listbrew/css/listbrew.css"
@@ -132,34 +132,21 @@ app_license = "mit"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+	"*": {
+		"on_update": "listbrew.sync.sync_subscriber_realtime",
+		"on_trash": "listbrew.sync.delete_subscriber_realtime"
+	}
+}
 
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
-# 	"all": [
-# 		"listbrew.tasks.all"
-# 	],
-# 	"daily": [
-# 		"listbrew.tasks.daily"
-# 	],
-# 	"hourly": [
-# 		"listbrew.tasks.hourly"
-# 	],
-# 	"weekly": [
-# 		"listbrew.tasks.weekly"
-# 	],
-# 	"monthly": [
-# 		"listbrew.tasks.monthly"
-# 	],
-# }
+scheduler_events = {
+	"hourly": [
+		"listbrew.sync.sync_scheduled"
+	]
+}
 
 # Testing
 # -------
@@ -237,6 +224,8 @@ app_license = "mit"
 # auth_hooks = [
 # 	"listbrew.auth.validate"
 # ]
+
+extend_bootinfo = "listbrew.utils.boot_session"
 
 # Automatically update python controller files with type annotations for this app.
 # export_python_type_annotations = True

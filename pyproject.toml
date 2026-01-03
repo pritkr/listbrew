@@ -9,6 +9,7 @@ readme = "README.md"
 dynamic = ["version"]
 dependencies = [
     # "frappe~=16.0.0" # Installed and managed by bench.
+    "listmonk @ git+https://github.com/pritkr/listmonk.git"
 ]
 
 [build-system]

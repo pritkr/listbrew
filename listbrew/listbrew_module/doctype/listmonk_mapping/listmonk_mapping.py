@@ -6,4 +6,6 @@ from frappe.model.document import Document
 
 
 class ListmonkMapping(Document):
-	pass
+	def after_insert(self):
+		from listbrew.sync import sync_mapping_bulk
+		sync_mapping_bulk(self)

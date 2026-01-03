@@ -1,72 +1,98 @@
 {
-    "actions": [],
-    "allow_rename": 1,
-    "autoname": "format:{source_doctype}-{listmonk_list_id}",
-    "creation": "2025-12-30 09:03:13.603155",
-    "doctype": "DocType",
-    "engine": "InnoDB",
-    "field_order": [
-        "source_doctype",
-        "listmonk_list_id",
-        "sync_enabled",
-        "name_field",
-        "email_field"
-    ],
-    "fields": [
-        {
-            "fieldname": "source_doctype",
-            "fieldtype": "Link",
-            "label": "Source doctype",
-            "options": "DocType"
-        },
-        {
-            "fieldname": "listmonk_list_id",
-            "fieldtype": "Int",
-            "label": "Listmonk list id"
-        },
-        {
-            "default": "0",
-            "fieldname": "sync_enabled",
-            "fieldtype": "Check",
-            "label": "Sync Enabled"
-        },
-        {
-            "fieldname": "name_field",
-            "fieldtype": "Data",
-            "label": "Name field"
-        },
-        {
-            "fieldname": "email_field",
-            "fieldtype": "Data",
-            "label": "Email field"
-        }
-    ],
-    "grid_page_length": 50,
-    "index_web_pages_for_search": 1,
-    "links": [],
-    "modified": "2025-12-30 13:20:45.897602",
-    "modified_by": "Administrator",
-    "module": "listbrew_module",
-    "name": "Listmonk Mapping",
-    "naming_rule": "Expression (old style)",
-    "owner": "Administrator",
-    "permissions": [
-        {
-            "create": 1,
-            "delete": 1,
-            "email": 1,
-            "export": 1,
-            "print": 1,
-            "read": 1,
-            "report": 1,
-            "role": "System Manager",
-            "share": 1,
-            "write": 1
-        }
-    ],
-    "row_format": "Dynamic",
-    "rows_threshold_for_grid_search": 20,
-    "sort_field": "creation",
-    "sort_order": "DESC",
-    "states": []
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:{source_doctype}-{listmonk_list_id}",
+ "creation": "2025-12-30 09:03:13.603155",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "source_doctype",
+  "listmonk_list_id",
+  "name_field",
+  "email_field",
+  "sync_enabled",
+  "on_delete_in_frappe",
+  "pre_confirm_subscriptions"
+ ],
+ "fields": [
+  {
+   "fieldname": "source_doctype",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Source doctype",
+   "options": "DocType",
+   "reqd": 1
+  },
+  {
+   "description": "Separated by commas",
+   "fieldname": "listmonk_list_id",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Listmonk list ids",
+   "placeholder": "1,2",
+   "reqd": 1
+  },
+  {
+   "default": "1",
+   "fieldname": "sync_enabled",
+   "fieldtype": "Check",
+   "label": "Sync Enabled"
+  },
+  {
+   "fieldname": "name_field",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Name field",
+   "reqd": 1
+  },
+  {
+   "fieldname": "email_field",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Email field",
+   "reqd": 1
+  },
+  {
+   "fieldname": "on_delete_in_frappe",
+   "fieldtype": "Select",
+   "label": "On delete in frappe",
+   "options": "Delete in listmonk\nUnsubscribe in listmonk",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "description": "If true, subscriptions are marked as confirmed and no-optin emails are sent for double opt-in lists.",
+   "fieldname": "pre_confirm_subscriptions",
+   "fieldtype": "Check",
+   "label": "Pre confirm subscriptions?"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-01-03 19:39:59.217350",
+ "modified_by": "Administrator",
+ "module": "listbrew_module",
+ "name": "Listmonk Mapping",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
 }

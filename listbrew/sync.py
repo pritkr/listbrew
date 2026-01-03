@@ -44,7 +44,10 @@ def sync_mapping_bulk(mapping_doc):
         return False
 
     source_doctype = mapping_doc.source_doctype
-    list_id = mapping_doc.listmonk_list_id
+    # Handle list_id as list of ints (comma separated string)
+    raw_list_ids = mapping_doc.listmonk_list_id or ""
+    list_ids = [int(x.strip()) for x in raw_list_ids.split(",") if x.strip()]
+
     email_field = mapping_doc.email_field
     name_field = mapping_doc.name_field
 
@@ -96,7 +99,7 @@ def sync_mapping_bulk(mapping_doc):
             file_path=Path(tmp_path),
             mode='subscribe',
             delim=',',
-            lists=[int(list_id)],
+            lists=list_ids,
             overwrite=True
         )
         frappe.msgprint(f"Started import for {source_doctype}. Status: {result}")
@@ -129,7 +132,10 @@ def sync_subscriber_realtime(doc, method=None):
 
     name = doc.get(mapping_doc.name_field) or ""
     attributes = get_safe_attributes(doc, exclude_fields=[mapping_doc.email_field, mapping_doc.name_field])
-    list_id = int(mapping_doc.listmonk_list_id)
+    
+    # Parse list IDs
+    raw_list_ids = mapping_doc.listmonk_list_id or ""
+    target_list_ids = {int(x.strip()) for x in raw_list_ids.split(",") if x.strip()}
 
     try:
         # Check if subscriber exists
@@ -139,26 +145,15 @@ def sync_subscriber_realtime(doc, method=None):
             # Update
             subscriber.name = name
             subscriber.attribs.update(attributes)
-            # Ensure list is present
-            current_lists = set(l.id for l in subscriber.lists)
-            current_lists.add(list_id)
             
-            # API expects lists_to_add and lists_to_remove
-            # But the python client update_subscriber takes (subscriber, lists_to_add, lists_to_remove)
-            # wait, let's check the client usage implementation in import (1).md
-            # subscriber = listmonk.update_subscriber(subscriber, {4, 6}, {5})
-            # where {4,6} are lists to add, {5} are lists to remove.
-            # Logic: we want to ensure list_id is in there. 
-            # So lists_to_add = {list_id}, lists_to_remove = set()
-            
-            client.update_subscriber(subscriber, {list_id}, set())
+            client.update_subscriber(subscriber, target_list_ids, set())
         else:
             # Create
             client.create_subscriber(
                 email,
                 name,
-                {list_id},
-                pre_confirm=True,
+                target_list_ids,
+                pre_confirm=bool(mapping_doc.pre_confirm_subscriptions),
                 attribs=attributes
             )
     except Exception as e:
@@ -185,14 +180,12 @@ def delete_subscriber_realtime(doc, method=None):
     try:
         subscriber = client.subscriber_by_email(email)
         if subscriber:
-             # Strategy: Either delete fully or just remove from list?
-             # User prompt says "on_trash handler".
-             # Safe strategy: completely delete or block?
-             # "Fully delete them from your system: listmonk.delete_subscriber(subscriber.email)"
-             # Let's assume full delete for now as per "sync" implies mirroring.
-             # Or maybe just block? "Block (unsubscribe) them: listmonk.block_subscriber(subscriber)"
-             # Let's go with delete to keep it simple and clean.
-             client.delete_subscriber(subscriber.email)
+             action = mapping_doc.on_delete_in_frappe
+             if action == "Unsubscribe in listmonk":
+                 client.block_subscriber(subscriber)
+             else:
+                 # Default to "Delete in listmonk"
+                 client.delete_subscriber(subscriber.email)
     except Exception as e:
         frappe.log_error(f"Delete sync failed for {doc.name}: {str(e)}", "Listbrew Sync Error")
 

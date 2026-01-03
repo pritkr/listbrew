@@ -8,10 +8,7 @@
   "enabled",
   "listmonk_url",
   "api_username",
-  "api_password",
-  "default_list_id",
-  "check_mltw",
-  "background_job_interval"
+  "api_password"
  ],
  "fields": [
   {
@@ -34,28 +31,13 @@
    "fieldname": "api_password",
    "fieldtype": "Data",
    "label": "API Password"
-  },
-  {
-   "fieldname": "default_list_id",
-   "fieldtype": "Int",
-   "label": "Default List ID"
-  },
-  {
-   "default": "0",
-   "fieldname": "check_mltw",
-   "fieldtype": "Check"
-  },
-  {
-   "fieldname": "background_job_interval",
-   "fieldtype": "Int",
-   "label": "Background Job Interval"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2025-12-30 08:47:51.527556",
+ "modified": "2026-01-03 19:39:04.862910",
  "modified_by": "Administrator",
  "module": "listbrew_module",
  "name": "listbrew_settings",

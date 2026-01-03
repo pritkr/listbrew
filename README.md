@@ -1,6 +1,20 @@
 ### Listbrew
 
-Auto sync between Frappe and Listmonk
+Realtime Auto sync from Frappe to Listmonk
+
+### Screenshots
+
+| Listbrew Settings | Listbrew Mapping |
+| ----------------- | ---------------- |
+| ![Listbrew Settings](ss2.webp) | ![Listbrew Mapping](ss1.webp) |
+
+
+### Setup
+
+1. Install the app
+2. Go to Listbrew module
+3. Add your Listmonk settings
+4. Add your mappings
 
 ### Installation
 
@@ -8,7 +22,7 @@ You can install this app using the [bench](https://github.com/frappe/bench) CLI:
 
 ```bash
 cd $PATH_TO_YOUR_BENCH
-bench get-app $URL_OF_THIS_REPO --branch develop
+bench get-app https://github.com/prit/listbrew --branch develop
 bench install-app listbrew
 ```
 

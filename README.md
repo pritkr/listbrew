@@ -22,7 +22,7 @@ You can install this app using the [bench](https://github.com/frappe/bench) CLI:
 
 ```bash
 cd $PATH_TO_YOUR_BENCH
-bench get-app https://github.com/prit/listbrew --branch develop
+bench get-app https://github.com/pritkr/listbrew --branch develop
 bench install-app listbrew
 ```
 

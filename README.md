@@ -1,4 +1,4 @@
-<a href="https://bodhya.net"><img src="/bodhya-badge.svg" align="right" alt="Bodhya Badge" height="20px"/></a>
+<a href="https://bodhya.net"><img src="/bodhya-badge.svg" align="right" alt="Bodhya Badge" height="30px"/></a>
 # Listbrew
 
 Realtime Auto sync from Frappe to Listmonk

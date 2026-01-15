@@ -1,4 +1,5 @@
-### Listbrew
+<a href="https://bodhya.net"><img src="/bodhya-badge.svg" align="right" alt="Bodhya Badge" /></a>
+# Listbrew
 
 Realtime Auto sync from Frappe to Listmonk
 
